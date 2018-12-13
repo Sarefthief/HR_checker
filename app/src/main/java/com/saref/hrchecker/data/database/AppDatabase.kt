@@ -19,6 +19,9 @@ interface EventDao
     @Query("SELECT * FROM events")
     fun getEventList(): Single<List<Event>>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM events WHERE id = :id)")
+    fun checkEvent(id: Int): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEvent(event: Event)
 
@@ -37,4 +40,7 @@ interface MemberDao
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllMembers(members: List<Member>)
+
+    @Update
+    fun updateMember(member: Member)
 }

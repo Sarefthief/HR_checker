@@ -9,21 +9,28 @@ import io.reactivex.Single
 
 class EventsRepositoryImpl : EventsRepository
 {
+
+
     private val databaseService = EventsDatabaseService()
     private val networkService = RetrofitProvider.dataApiService
 
-    override fun getEvents(): Single<List<Event>> =
+    override fun getEventsFromDatabase(): Single<List<Event>> =
+        databaseService.getEvents()
+
+    override fun getEventsFromServer(): Single<List<Event>> =
         networkService.getEvents().flatMap {
             Observable.fromIterable(it)
                 .map { event ->
-                    networkService.getMembers(event.id)
-                        .map { membersList -> databaseService.saveMembers(membersList) }
-                        .subscribe()
+                    if(databaseService.checkEvent(event.id) == 0)
+                    {
+                        networkService.getMembers(event.id)
+                            .map { membersList -> databaseService.saveMembers(membersList) }
+                            .subscribe()
+                    }
                 }
                 .subscribe()
 
             databaseService.saveEvents(it)
             databaseService.getEvents()
         }.onErrorResumeNext(databaseService.getEvents())
-
 }

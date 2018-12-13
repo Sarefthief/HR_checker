@@ -6,15 +6,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.saref.hrchecker.R
-import com.saref.hrchecker.data.EventsRepositoryImpl
 import com.saref.hrchecker.data.MembersRepositoryImpl
-import com.saref.hrchecker.domain.entity.Event
 import com.saref.hrchecker.domain.entity.Member
-import com.saref.hrchecker.presentation.events.EventListAdapter
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_events.*
 import kotlinx.android.synthetic.main.activity_members.*
 
 class MembersActivity : AppCompatActivity()
@@ -32,7 +30,7 @@ class MembersActivity : AppCompatActivity()
         fun startActivity(context: Context, eventId: Int, eventTitle: String)
         {
             val intent = Intent(context, MembersActivity::class.java)
-            intent.putExtra(EVENT_ID_EXTRA,eventId)
+            intent.putExtra(EVENT_ID_EXTRA, eventId)
             intent.putExtra(EVENT_TITLE_EXTRA, eventTitle)
             context.startActivity(intent)
         }
@@ -58,16 +56,25 @@ class MembersActivity : AppCompatActivity()
                         memberList = result
                         initiateRecycleView()
                     }
+
     }
 
     private fun initiateRecycleView()
     {
         adapter = MemberListAdapter(object :
-           MemberListAdapter.ClickListener
+            MemberListAdapter.ItemClickListener
         {
-            override fun onItemClick()
+            override fun onItemClick(member: Member)
             {
-
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        }, object : MemberListAdapter.CheckBoxClickListener
+        {
+            override fun onCheckBoxClick(member: Member)
+            {
+                membersLoader = Observable.just(MembersRepositoryImpl())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe { repository -> repository.updateMember(member) }
             }
 
         })

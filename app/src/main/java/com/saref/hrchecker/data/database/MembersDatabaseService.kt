@@ -9,4 +9,6 @@ class MembersDatabaseService
     private val memberDao: MemberDao = App.instance.getMemberDao()
 
     fun getMembers(eventId: Int): Single<List<Member>> = memberDao.getMembers(eventId)
+
+    fun updateMember(member: Member) = memberDao.updateMember(member)
 }

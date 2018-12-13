@@ -3,9 +3,8 @@ package com.saref.hrchecker.domain.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(tableName = "members")
+@Entity(tableName = "members", primaryKeys = ["id","eventId"])
 data class Member(
-    @PrimaryKey
     val id: Int,
     val phone: String,
     val city: String,

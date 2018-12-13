@@ -7,7 +7,7 @@ import com.saref.hrchecker.utils.convertToMember
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class DataApiService(val api: Api)
+class DataApiService(private val api: Api)
 {
     fun getEvents(): Single<List<Event>> =
         api.getEvents().flatMap {

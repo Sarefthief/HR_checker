@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HR_checker</string>
+    <string name="listIsEmpty">Список пуст</string>
 </resources>

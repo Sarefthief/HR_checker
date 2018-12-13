@@ -9,7 +9,9 @@ class MembersRepositoryImpl : MembersRepository
 {
     private val databaseService = MembersDatabaseService()
 
-    override fun getMembers(eventId: Int): Single<List<Member>> = databaseService.getMembers(eventId)
+    override fun getMembers(eventId: Int): Single<List<Member>> =
+        databaseService.getMembers(eventId)
 
+    override fun updateMember(member: Member) = databaseService.updateMember(member)
 
 }

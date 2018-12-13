@@ -3,6 +3,7 @@ package com.saref.hrchecker.presentation.events
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.saref.hrchecker.R
 import com.saref.hrchecker.data.EventsRepositoryImpl
 import com.saref.hrchecker.domain.entity.Event
@@ -23,20 +24,41 @@ class EventsActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
         eventsListView.layoutManager = LinearLayoutManager(this)
-        getEvents()
+        initiateRecycleView()
+        getEventsFromDatabase()
     }
 
-    private fun getEvents()
+    private fun getEventsFromDatabase()
+    {
+        eventsListProgressBar.visibility = View.VISIBLE
+        eventsLoader =
+                EventsRepositoryImpl().getEventsFromDatabase()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { result ->
+                        if (result.isNotEmpty())
+                        {
+                            eventList = result
+                            updateRecycleView()
+                            eventsListProgressBar.visibility = View.GONE
+                        }
+                        getEventsFromServer()
+                    }
+    }
+
+    private fun getEventsFromServer()
     {
         eventsLoader =
-                EventsRepositoryImpl().getEvents()
+                EventsRepositoryImpl().getEventsFromServer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
                         eventList = result
-                        initiateRecycleView()
+                        updateRecycleView()
+                        eventsListProgressBar.visibility = View.GONE
                     }
     }
+
 
     private fun initiateRecycleView()
     {
@@ -45,13 +67,13 @@ class EventsActivity : AppCompatActivity()
         {
             override fun onItemClick(eventId: Int, eventTitle: String)
             {
-                MembersActivity.startActivity(this@EventsActivity, eventId, eventTitle )
+                MembersActivity.startActivity(this@EventsActivity, eventId, eventTitle)
             }
-
         })
         eventsListView.adapter = adapter
-        adapter.updateEvents(eventList)
     }
+
+    private fun updateRecycleView() = adapter.updateEvents(eventList)
 
     override fun onStop()
     {

@@ -15,5 +15,7 @@ class EventsDatabaseService
     fun saveMembers(members: List<Member>) = memberDao.insertAllMembers(members)
 
     fun getEvents(): Single<List<Event>> = eventDao.getEventList()
+
+    fun checkEvent(eventId: Int) = eventDao.checkEvent(eventId)
 }
 

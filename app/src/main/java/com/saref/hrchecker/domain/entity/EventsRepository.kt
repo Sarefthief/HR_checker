@@ -4,5 +4,6 @@ import io.reactivex.Single
 
 interface EventsRepository
 {
-    fun getEvents(): Single<List<Event>>
+    fun getEventsFromDatabase(): Single<List<Event>>
+    fun getEventsFromServer(): Single<List<Event>>
 }
