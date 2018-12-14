@@ -35,6 +35,9 @@ interface MemberDao
     @Query("SELECT * FROM members WHERE eventId = :eventId order by lastName")
     fun getMembers(eventId: Int): Single<List<Member>>
 
+    @Query("SELECT * FROM members WHERE eventId = :eventId and presentStatus = 1")
+    fun getPresentMembers(eventId: Int): Single<List<Member>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMember(member: Member)
 

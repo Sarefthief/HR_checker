@@ -9,6 +9,11 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/sendMembersButton"
+        android:title="@string/sendMembersButton"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_search"
         android:orderInCategory="100"
         android:icon="@drawable/search_action"

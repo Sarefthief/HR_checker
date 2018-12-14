@@ -1,7 +1,7 @@
 package com.saref.hrchecker.features.events.data
 
 import com.saref.hrchecker.features.events.data.database.EventsDatabaseService
-import com.saref.hrchecker.features.events.data.network.RetrofitProvider
+import com.saref.hrchecker.data.network.RetrofitProvider
 import com.saref.hrchecker.features.events.domain.Event
 import com.saref.hrchecker.features.events.domain.EventsRepository
 import io.reactivex.Observable
@@ -10,9 +10,8 @@ import io.reactivex.Single
 class EventsRepositoryImpl : EventsRepository
 {
 
-
     private val databaseService = EventsDatabaseService()
-    private val networkService = RetrofitProvider.dataApiService
+    private val networkService = RetrofitProvider.eventsApiService
 
     override fun getEventsFromDatabase(): Single<List<Event>> =
         databaseService.getEvents()
@@ -33,4 +32,6 @@ class EventsRepositoryImpl : EventsRepository
             databaseService.saveEvents(it)
             databaseService.getEvents()
         }.onErrorResumeNext(databaseService.getEvents())
+
+
 }

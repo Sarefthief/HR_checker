@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.utils.Constants
 import kotlinx.android.synthetic.main.item_member.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MemberListAdapter(
     private val itemClickListener: ItemClickListener,
@@ -25,11 +28,24 @@ class MemberListAdapter(
 
     override fun getItemCount(): Int = filteredMemberList.size
 
-    override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int){
+    override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int)
+    {
         viewHolder.bind(filteredMemberList[position], itemClickListener)
         viewHolder.itemView.checkBox.isChecked = filteredMemberList[position].presentStatus
         viewHolder.itemView.checkBox.setOnCheckedChangeListener { _, isChecked ->
             filteredMemberList[position].presentStatus = isChecked
+            if (isChecked)
+            {
+                filteredMemberList[position].visitedDate = SimpleDateFormat(
+                    Constants.VISITED_DATE_FORMAT,
+                    Locale.getDefault()
+                ).format(Date())
+            }
+            else
+            {
+                filteredMemberList[position].visitedDate = ""
+            }
+
             checkBoxClickListener.onCheckBoxClick(filteredMemberList[position])
         }
     }
@@ -76,9 +92,12 @@ class MemberListAdapter(
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults)
             {
-                if(filterResults.values is List<*>){
-                filteredMemberList = (filterResults.values as List<*>).filterIsInstance<Member>()
-                notifyDataSetChanged()}
+                if (filterResults.values is List<*>)
+                {
+                    filteredMemberList =
+                            (filterResults.values as List<*>).filterIsInstance<Member>()
+                    notifyDataSetChanged()
+                }
             }
         }
     }

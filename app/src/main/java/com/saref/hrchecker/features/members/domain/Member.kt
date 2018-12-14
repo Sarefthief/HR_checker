@@ -18,5 +18,6 @@ data class Member(
     val patronymic: String,
     val email: String,
     val eventId: Int,
-    var presentStatus: Boolean = false
+    var presentStatus: Boolean = false,
+    var visitedDate: String = ""
 ): Serializable

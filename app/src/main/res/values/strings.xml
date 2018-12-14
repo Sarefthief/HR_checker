@@ -15,4 +15,5 @@
     <string name="membersChecked">Отмечено пользователей:</string>
     <string name="action_search">Поиск</string>
     <string name="search_hint">Введите имя</string>
+    <string name="sendMembersButton">Отправить данные</string>
 </resources>

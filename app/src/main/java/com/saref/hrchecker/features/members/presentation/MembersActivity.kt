@@ -5,13 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
 import com.saref.hrchecker.features.members.data.MembersRepositoryImpl
+import com.saref.hrchecker.features.members.data.network.dto.MemberListDto
+import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
 import com.saref.hrchecker.features.members.domain.Member
 import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
 import io.reactivex.Observable
@@ -19,6 +23,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_members.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MembersActivity : AppCompatActivity()
@@ -66,9 +73,47 @@ class MembersActivity : AppCompatActivity()
 
     }
 
+    private fun getPresentMembers()
+    {
+        membersLoader =
+                MembersRepositoryImpl().getPresentMembers(eventId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { result ->
+                        sendMembers(result)
+                    }
+    }
+
+    private fun sendMembers(membersList: List<MemberPostDto>)
+    {
+        val call: Call<MemberListDto> =
+            MembersRepositoryImpl().sendMembersToServer(eventId, MemberListDto(membersList))
+        call.enqueue(object : Callback<MemberListDto>
+        {
+            override fun onResponse(
+                call: Call<MemberListDto>, response: Response<MemberListDto>
+            )
+            {
+                val code: Int = response.code()
+                Toast.makeText(this@MembersActivity, "Win ?", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(call: Call<MemberListDto>, t: Throwable)
+            {
+                throw (t)
+            }
+        })
+    }
+
     private fun initiateRecycleView()
     {
         membersListView.layoutManager = LinearLayoutManager(this)
+        membersListView.addItemDecoration(
+            DividerItemDecoration(
+                membersListView.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         adapter = MemberListAdapter(object :
             MemberListAdapter.ItemClickListener
         {
@@ -94,8 +139,10 @@ class MembersActivity : AppCompatActivity()
         menuInflater.inflate(R.menu.members_menu, menu)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager
-            .getSearchableInfo(componentName))
+        searchView.setSearchableInfo(
+            searchManager
+                .getSearchableInfo(componentName)
+        )
         searchView.maxWidth = Integer.MAX_VALUE
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener
         {
@@ -114,7 +161,6 @@ class MembersActivity : AppCompatActivity()
         return super.onCreateOptionsMenu(menu)
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean
     {
         if (item.itemId == android.R.id.home)
@@ -123,7 +169,16 @@ class MembersActivity : AppCompatActivity()
         }
         if (item.itemId == R.id.statisticMenuButton)
         {
-            StatisticActivity.startActivity(this, memberList.size, memberList.count { member -> member.presentStatus }, title.toString())
+            StatisticActivity.startActivity(
+                this,
+                memberList.size,
+                memberList.count { member -> member.presentStatus },
+                title.toString()
+            )
+        }
+        if (item.itemId == R.id.sendMembersButton)
+        {
+            getPresentMembers()
         }
         return super.onOptionsItemSelected(item)
     }

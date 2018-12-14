@@ -6,6 +6,7 @@ import android.text.Spanned
 import com.saref.hrchecker.features.events.data.network.dto.EventDto
 import com.saref.hrchecker.features.events.data.network.dto.MemberDto
 import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
 import com.saref.hrchecker.features.members.domain.Member
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,6 +41,13 @@ fun MemberDto.convertToMember(eventId: Int) = Member(
     email = this.email,
     eventId = eventId
 )
+
+fun Member.convertToMemberPostDto() =
+    MemberPostDto(
+        id = this.id,
+        isVisited = this.presentStatus,
+        visitedDate = this.visitedDate
+    )
 
 fun String.setTextHTML(): Spanned =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)

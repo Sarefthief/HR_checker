@@ -1,5 +1,6 @@
 package com.saref.hrchecker.features.events.data.network
 
+import com.saref.hrchecker.data.network.Api
 import com.saref.hrchecker.features.events.domain.Event
 import com.saref.hrchecker.features.members.domain.Member
 import com.saref.hrchecker.utils.convertToEvent
@@ -7,7 +8,7 @@ import com.saref.hrchecker.utils.convertToMember
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class DataApiService(private val api: Api)
+class EventsApiService(private val api: Api)
 {
     fun getEvents(): Single<List<Event>> =
         api.getEvents().flatMap {
