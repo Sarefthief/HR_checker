@@ -22,5 +22,4 @@ class DataApiService(private val api: Api)
                 .map { memberDto -> memberDto.convertToMember(eventId) }
                 .toList()
         }
-
 }
