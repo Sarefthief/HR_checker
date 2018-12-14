@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.members.domain.Member
 import kotlinx.android.synthetic.main.item_member.view.*
@@ -14,6 +15,7 @@ class MemberListAdapter(
 ) : RecyclerView.Adapter<MemberListAdapter.MemberListViewHolder>()
 {
     private var memberList: List<Member> = arrayListOf()
+    private var filteredMemberList: List<Member> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, pi: Int): MemberListViewHolder
     {
@@ -21,15 +23,58 @@ class MemberListAdapter(
         return MemberListViewHolder(view)
     }
 
-    override fun getItemCount(): Int = memberList.size
+    override fun getItemCount(): Int = filteredMemberList.size
 
     override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int) =
-        viewHolder.bind(memberList[position], itemClickListener, checkBoxClickListener)
+        viewHolder.bind(filteredMemberList[position], itemClickListener, checkBoxClickListener)
 
     fun updateMembers(memberList: List<Member>)
     {
         this.memberList = memberList
+        this.filteredMemberList = memberList
         notifyDataSetChanged()
+    }
+
+    fun getFilter(): Filter
+    {
+        return object : Filter()
+        {
+            override fun performFiltering(charSequence: CharSequence): FilterResults
+            {
+                val charString = charSequence.toString()
+                if (charString.isEmpty())
+                {
+                    filteredMemberList = memberList
+                }
+                else
+                {
+                    val filteredList: MutableList<Member> = arrayListOf()
+                    for (row in memberList)
+                    {
+
+                        if (row.lastName.toLowerCase().contains(charString.toLowerCase()) ||
+                            row.firstName.toLowerCase().contains(charString.toLowerCase())
+                        )
+                        {
+                            filteredList.add(row)
+                        }
+                    }
+
+                    filteredMemberList = filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = filteredMemberList
+                return filterResults
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults)
+            {
+                if(filterResults.values is List<*>){
+                filteredMemberList = (filterResults.values as List<*>).filterIsInstance<Member>()
+                notifyDataSetChanged()}
+            }
+        }
     }
 
     interface ItemClickListener
@@ -54,7 +99,7 @@ class MemberListAdapter(
             view.memberName.text = name
             view.checkBox.isChecked = member.presentStatus
             view.setOnClickListener { itemListener.onItemClick(member) }
-            view.checkBox.setOnCheckedChangeListener{ _, isChecked ->
+            view.checkBox.setOnCheckedChangeListener { _, isChecked ->
                 member.presentStatus = isChecked
                 checkBoxListener.onCheckBoxClick(member)
             }

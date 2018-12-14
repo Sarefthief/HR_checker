@@ -32,7 +32,7 @@ interface EventDao
 @Dao
 interface MemberDao
 {
-    @Query("SELECT * FROM members WHERE eventId = :eventId")
+    @Query("SELECT * FROM members WHERE eventId = :eventId order by lastName")
     fun getMembers(eventId: Int): Single<List<Member>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

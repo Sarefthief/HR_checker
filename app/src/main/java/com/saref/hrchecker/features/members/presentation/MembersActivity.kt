@@ -17,6 +17,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_members.*
+import android.support.v4.view.MenuItemCompat.getActionView
+import android.app.SearchManager
+import android.support.v7.widget.SearchView
+
 
 class MembersActivity : AppCompatActivity()
 {
@@ -46,6 +50,7 @@ class MembersActivity : AppCompatActivity()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = intent.getStringExtra(EVENT_TITLE_EXTRA)
         eventId = intent.getIntExtra(EVENT_ID_EXTRA, -1)
+        initiateRecycleView()
         getMembers()
     }
 
@@ -57,7 +62,7 @@ class MembersActivity : AppCompatActivity()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
                         memberList = result
-                        initiateRecycleView()
+                        adapter.updateMembers(memberList)
                     }
 
     }
@@ -83,12 +88,30 @@ class MembersActivity : AppCompatActivity()
 
         })
         membersListView.adapter = adapter
-        adapter.updateMembers(memberList)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean
+    override fun onCreateOptionsMenu(menu: Menu): Boolean
     {
         menuInflater.inflate(R.menu.members_menu, menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager
+            .getSearchableInfo(componentName))
+        searchView.maxWidth = Integer.MAX_VALUE
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener
+        {
+            override fun onQueryTextSubmit(query: String): Boolean
+            {
+                adapter.getFilter().filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean
+            {
+                adapter.getFilter().filter(query)
+                return false
+            }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 

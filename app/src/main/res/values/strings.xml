@@ -13,4 +13,6 @@
     <string name="addition">7. Дополнительная информация</string>
     <string name="membersRegistered">Зарегистрировано пользователей:</string>
     <string name="membersChecked">Отмечено пользователей:</string>
+    <string name="action_search">Поиск</string>
+    <string name="search_hint">Введите имя</string>
 </resources>
