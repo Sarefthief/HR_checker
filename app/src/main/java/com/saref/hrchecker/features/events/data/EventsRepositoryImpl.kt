@@ -1,9 +1,9 @@
-package com.saref.hrchecker.data
+package com.saref.hrchecker.features.events.data
 
-import com.saref.hrchecker.data.database.EventsDatabaseService
-import com.saref.hrchecker.data.network.RetrofitProvider
-import com.saref.hrchecker.domain.entity.Event
-import com.saref.hrchecker.domain.entity.EventsRepository
+import com.saref.hrchecker.features.events.data.database.EventsDatabaseService
+import com.saref.hrchecker.features.events.data.network.RetrofitProvider
+import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.events.domain.EventsRepository
 import io.reactivex.Observable
 import io.reactivex.Single
 

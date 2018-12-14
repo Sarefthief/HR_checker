@@ -12,15 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.events.EventsActivity">
+        <activity
+            android:name="com.saref.hrchecker.features.events.presentation.EventsActivity"
+            android:label="@string/eventsActivityTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.members.MembersActivity"
+        <activity
+            android:name="com.saref.hrchecker.features.members.presentation.MembersActivity"
             android:launchMode="singleTask" />
+        <activity android:name="com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity" />
+        <activity android:name="com.saref.hrchecker.features.statistic.presentation.StatisticActivity"></activity>
     </application>
 
 </manifest>

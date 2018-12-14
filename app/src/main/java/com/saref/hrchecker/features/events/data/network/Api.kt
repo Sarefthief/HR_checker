@@ -1,7 +1,7 @@
-package com.saref.hrchecker.data.network
+package com.saref.hrchecker.features.events.data.network
 
-import com.saref.hrchecker.data.network.dto.EventDto
-import com.saref.hrchecker.data.network.dto.MemberDto
+import com.saref.hrchecker.features.events.data.network.dto.EventDto
+import com.saref.hrchecker.features.events.data.network.dto.MemberDto
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

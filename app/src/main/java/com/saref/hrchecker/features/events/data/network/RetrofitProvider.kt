@@ -1,4 +1,4 @@
-package com.saref.hrchecker.data.network
+package com.saref.hrchecker.features.events.data.network
 
 import com.saref.hrchecker.utils.Constants
 import retrofit2.Retrofit

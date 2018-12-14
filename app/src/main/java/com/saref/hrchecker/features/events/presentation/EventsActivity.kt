@@ -1,13 +1,13 @@
-package com.saref.hrchecker.presentation.events
+package com.saref.hrchecker.features.events.presentation
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.saref.hrchecker.R
-import com.saref.hrchecker.data.EventsRepositoryImpl
-import com.saref.hrchecker.domain.entity.Event
-import com.saref.hrchecker.presentation.members.MembersActivity
+import com.saref.hrchecker.features.events.data.EventsRepositoryImpl
+import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.members.presentation.MembersActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

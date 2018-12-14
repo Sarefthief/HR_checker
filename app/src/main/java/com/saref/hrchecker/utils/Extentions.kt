@@ -1,9 +1,12 @@
 package com.saref.hrchecker.utils
 
-import com.saref.hrchecker.data.network.dto.EventDto
-import com.saref.hrchecker.data.network.dto.MemberDto
-import com.saref.hrchecker.domain.entity.Event
-import com.saref.hrchecker.domain.entity.Member
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
+import com.saref.hrchecker.features.events.data.network.dto.EventDto
+import com.saref.hrchecker.features.events.data.network.dto.MemberDto
+import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.members.domain.Member
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,3 +40,13 @@ fun MemberDto.convertToMember(eventId: Int) = Member(
     email = this.email,
     eventId = eventId
 )
+
+fun String.setTextHTML(): Spanned =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+    {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+    }
+    else
+    {
+        Html.fromHtml(this)
+    }

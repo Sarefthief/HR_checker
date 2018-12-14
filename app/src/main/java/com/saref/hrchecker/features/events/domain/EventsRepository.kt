@@ -1,4 +1,4 @@
-package com.saref.hrchecker.domain.entity
+package com.saref.hrchecker.features.events.domain
 
 import io.reactivex.Single
 

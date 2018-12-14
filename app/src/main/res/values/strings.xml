@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">HR_checker</string>
     <string name="listIsEmpty">Список пуст</string>
+    <string name="statisticMenuButton">Статистика</string>
+    <string name="eventsActivityTitle">Check-in</string>
+    <string name="form">Анкета</string>
+    <string name="patronymic">1. Отчество</string>
+    <string name="phone">2. Мобильный телефон</string>
+    <string name="email">3. Электронная почта</string>
+    <string name="city">4. Город</string>
+    <string name="company">5. Компания</string>
+    <string name="position">6. Должность</string>
+    <string name="addition">7. Дополнительная информация</string>
 </resources>

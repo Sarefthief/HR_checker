@@ -1,11 +1,11 @@
-package com.saref.hrchecker.presentation.events
+package com.saref.hrchecker.features.events.presentation
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.saref.hrchecker.R
-import com.saref.hrchecker.domain.entity.Event
+import com.saref.hrchecker.features.events.domain.Event
 import com.saref.hrchecker.utils.Constants
 import kotlinx.android.synthetic.main.item_event.view.*
 import java.text.SimpleDateFormat
@@ -40,7 +40,7 @@ class EventListAdapter(private val clickListener: ClickListener) :
 
     class EventListViewHolder(val view: View) : RecyclerView.ViewHolder(view)
     {
-        fun bind(event: Event, listener: EventListAdapter.ClickListener)
+        fun bind(event: Event, listener: ClickListener)
         {
             view.eventTitle.text = event.title
             view.eventStartDate.text =
