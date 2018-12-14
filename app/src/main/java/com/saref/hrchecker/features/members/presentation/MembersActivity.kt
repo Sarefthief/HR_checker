@@ -11,6 +11,7 @@ import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
 import com.saref.hrchecker.features.members.data.MembersRepositoryImpl
 import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -25,18 +26,18 @@ class MembersActivity : AppCompatActivity()
     private var eventId: Int = -1
 
     companion object
-{
-    private const val EVENT_ID_EXTRA = "EVENT_ID_EXTRA"
-    private const val EVENT_TITLE_EXTRA = "EVENT_TITLE_EXTRA"
-
-    fun startActivity(context: Context, eventId: Int, eventTitle: String)
     {
-        val intent = Intent(context, MembersActivity::class.java)
-        intent.putExtra(EVENT_ID_EXTRA, eventId)
-        intent.putExtra(EVENT_TITLE_EXTRA, eventTitle)
-        context.startActivity(intent)
+        private const val EVENT_ID_EXTRA = "EVENT_ID_EXTRA"
+        private const val EVENT_TITLE_EXTRA = "EVENT_TITLE_EXTRA"
+
+        fun startActivity(context: Context, eventId: Int, eventTitle: String)
+        {
+            val intent = Intent(context, MembersActivity::class.java)
+            intent.putExtra(EVENT_ID_EXTRA, eventId)
+            intent.putExtra(EVENT_TITLE_EXTRA, eventTitle)
+            context.startActivity(intent)
+        }
     }
-}
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -100,7 +101,7 @@ class MembersActivity : AppCompatActivity()
         }
         if (item.itemId == R.id.statisticMenuButton)
         {
-
+            StatisticActivity.startActivity(this, memberList.size, memberList.count { member -> member.presentStatus }, title.toString())
         }
         return super.onOptionsItemSelected(item)
     }

@@ -11,4 +11,6 @@
     <string name="company">5. Компания</string>
     <string name="position">6. Должность</string>
     <string name="addition">7. Дополнительная информация</string>
+    <string name="membersRegistered">Зарегистрировано пользователей:</string>
+    <string name="membersChecked">Отмечено пользователей:</string>
 </resources>
