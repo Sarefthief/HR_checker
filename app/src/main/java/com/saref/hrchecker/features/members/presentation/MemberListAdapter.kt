@@ -25,8 +25,14 @@ class MemberListAdapter(
 
     override fun getItemCount(): Int = filteredMemberList.size
 
-    override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int) =
-        viewHolder.bind(filteredMemberList[position], itemClickListener, checkBoxClickListener)
+    override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int){
+        viewHolder.bind(filteredMemberList[position], itemClickListener)
+        viewHolder.itemView.checkBox.isChecked = filteredMemberList[position].presentStatus
+        viewHolder.itemView.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            filteredMemberList[position].presentStatus = isChecked
+            checkBoxClickListener.onCheckBoxClick(filteredMemberList[position])
+        }
+    }
 
     fun updateMembers(memberList: List<Member>)
     {
@@ -91,18 +97,13 @@ class MemberListAdapter(
     {
         fun bind(
             member: Member,
-            itemListener: ItemClickListener,
-            checkBoxListener: CheckBoxClickListener
+            itemListener: ItemClickListener
         )
         {
             val name = "${member.lastName} ${member.firstName}"
             view.memberName.text = name
-            view.checkBox.isChecked = member.presentStatus
+
             view.setOnClickListener { itemListener.onItemClick(member) }
-            view.checkBox.setOnCheckedChangeListener { _, isChecked ->
-                member.presentStatus = isChecked
-                checkBoxListener.onCheckBoxClick(member)
-            }
         }
     }
 }

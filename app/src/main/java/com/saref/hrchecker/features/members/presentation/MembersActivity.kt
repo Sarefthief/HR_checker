@@ -1,10 +1,12 @@
 package com.saref.hrchecker.features.members.presentation
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import com.saref.hrchecker.R
@@ -17,9 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_members.*
-import android.support.v4.view.MenuItemCompat.getActionView
-import android.app.SearchManager
-import android.support.v7.widget.SearchView
 
 
 class MembersActivity : AppCompatActivity()
