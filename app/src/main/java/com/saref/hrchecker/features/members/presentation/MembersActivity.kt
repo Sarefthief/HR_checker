@@ -14,7 +14,7 @@ import android.widget.Toast
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
 import com.saref.hrchecker.features.members.data.MembersRepositoryImpl
-import com.saref.hrchecker.features.members.data.network.dto.MemberPostResponse
+import com.saref.hrchecker.features.members.data.network.MemberPostResponse
 import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
 import com.saref.hrchecker.features.members.domain.Member
 import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
@@ -80,7 +80,10 @@ class MembersActivity : AppCompatActivity()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
-                        sendMembers(result)
+                        if (result.isNotEmpty())
+                        {
+                            sendMembers(result)
+                        }
                     }
     }
 
@@ -94,13 +97,19 @@ class MembersActivity : AppCompatActivity()
                 call: Call<MemberPostResponse>, response: Response<MemberPostResponse>
             )
             {
-                val code: Int = response.code()
-                Toast.makeText(this@MembersActivity, "Win ?", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@MembersActivity,
+                    getString(R.string.postRequestSuccessfulToast),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             override fun onFailure(call: Call<MemberPostResponse>, t: Throwable)
             {
-                throw (t)
+                Toast.makeText(
+                    this@MembersActivity, getString(R.string.postRequestErrorToast),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }

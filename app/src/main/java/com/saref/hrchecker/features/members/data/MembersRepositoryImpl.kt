@@ -3,7 +3,7 @@ package com.saref.hrchecker.features.members.data
 import com.saref.hrchecker.data.network.RetrofitProvider
 import com.saref.hrchecker.features.members.data.database.MembersDatabaseService
 import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
-import com.saref.hrchecker.features.members.data.network.dto.MemberPostResponse
+import com.saref.hrchecker.features.members.data.network.MemberPostResponse
 import com.saref.hrchecker.features.members.domain.Member
 import com.saref.hrchecker.features.members.domain.MembersRepository
 import io.reactivex.Single

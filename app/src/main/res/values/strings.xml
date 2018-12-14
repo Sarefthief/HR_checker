@@ -16,4 +16,6 @@
     <string name="action_search">Поиск</string>
     <string name="search_hint">Введите имя</string>
     <string name="sendMembersButton">Отправить данные</string>
+    <string name="postRequestErrorToast">Что-то пошло не так</string>
+    <string name="postRequestSuccessfulToast">Отправка прошла успешно</string>
 </resources>
