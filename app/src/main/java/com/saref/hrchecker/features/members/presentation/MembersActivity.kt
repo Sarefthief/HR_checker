@@ -14,7 +14,7 @@ import android.widget.Toast
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
 import com.saref.hrchecker.features.members.data.MembersRepositoryImpl
-import com.saref.hrchecker.features.members.data.network.dto.MemberListDto
+import com.saref.hrchecker.features.members.data.network.dto.MemberPostResponse
 import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
 import com.saref.hrchecker.features.members.domain.Member
 import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
@@ -86,19 +86,19 @@ class MembersActivity : AppCompatActivity()
 
     private fun sendMembers(membersList: List<MemberPostDto>)
     {
-        val call: Call<MemberListDto> =
-            MembersRepositoryImpl().sendMembersToServer(eventId, MemberListDto(membersList))
-        call.enqueue(object : Callback<MemberListDto>
+        val call: Call<MemberPostResponse> =
+            MembersRepositoryImpl().sendMembersToServer(eventId, membersList)
+        call.enqueue(object : Callback<MemberPostResponse>
         {
             override fun onResponse(
-                call: Call<MemberListDto>, response: Response<MemberListDto>
+                call: Call<MemberPostResponse>, response: Response<MemberPostResponse>
             )
             {
                 val code: Int = response.code()
                 Toast.makeText(this@MembersActivity, "Win ?", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<MemberListDto>, t: Throwable)
+            override fun onFailure(call: Call<MemberPostResponse>, t: Throwable)
             {
                 throw (t)
             }

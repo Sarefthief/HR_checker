@@ -2,7 +2,7 @@ package com.saref.hrchecker.data.network
 
 import com.saref.hrchecker.features.events.data.network.dto.EventDto
 import com.saref.hrchecker.features.events.data.network.dto.MemberDto
-import com.saref.hrchecker.features.members.data.network.dto.MemberListDto
+import com.saref.hrchecker.features.members.data.network.dto.MemberPostResponse
 import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
 import io.reactivex.Single
 import retrofit2.Call
@@ -20,5 +20,5 @@ interface Api
     fun getMembers(@Path("eventId") eventId: Int): Single<List<MemberDto>>
 
     @POST("Registration/members/event/{eventId}/confirmation?token=cftteamtest2018")
-    fun sendMembers(@Path("eventId") eventId: Int, @Body membersList: MemberListDto): Call<MemberListDto>
+    fun sendMembers(@Path("eventId") eventId: Int, @Body membersList: List<MemberPostDto>): Call<MemberPostResponse>
 }
