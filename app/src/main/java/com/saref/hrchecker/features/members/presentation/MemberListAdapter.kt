@@ -28,6 +28,10 @@ class MemberListAdapter(
 
     override fun getItemCount(): Int = filteredMemberList.size
 
+    fun getMemberListCount(): Int = memberList.size
+
+    fun getPresentMembersCount(): Int = memberList.count { member -> member.presentStatus }
+
     override fun onBindViewHolder(viewHolder: MemberListViewHolder, position: Int)
     {
         viewHolder.bind(filteredMemberList[position], itemClickListener)

@@ -13,29 +13,12 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
-import com.saref.hrchecker.features.members.data.network.entity.MemberPostDto
-import com.saref.hrchecker.features.members.data.network.entity.MemberPostResponse
 import com.saref.hrchecker.features.members.domain.entity.Member
-import com.saref.hrchecker.features.members.domain.interactor.MembersInteractor
-import com.saref.hrchecker.features.members.domain.interactor.MembersInteractorImpl
 import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_members.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MembersActivity : AppCompatActivity()
+class MembersActivity : AppCompatActivity(), MembersContract.View
 {
-    private lateinit var membersLoader: Disposable
-    private lateinit var memberList: List<Member>
-    private lateinit var adapter: MemberListAdapter
-    private var membersInteractor: MembersInteractor = MembersInteractorImpl()
-    private var eventId: Int = -1
-
     companion object
     {
         private const val EVENT_ID_EXTRA = "EVENT_ID_EXTRA"
@@ -50,72 +33,21 @@ class MembersActivity : AppCompatActivity()
         }
     }
 
+    private lateinit var adapter: MemberListAdapter
+    private lateinit var presenter: MembersContract.Presenter
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_members)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = intent.getStringExtra(EVENT_TITLE_EXTRA)
-        eventId = intent.getIntExtra(EVENT_ID_EXTRA, -1)
-        initiateRecycleView()
-        getMembers()
+
+        presenter = MembersPresenter()
+        (presenter as MembersPresenter).attachView(this, intent.getIntExtra(EVENT_ID_EXTRA, -1))
     }
 
-    private fun getMembers()
-    {
-        membersLoader =
-                membersInteractor.getMembers(eventId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { result ->
-                        memberList = result
-                        adapter.updateMembers(memberList)
-                    }
-
-    }
-
-    private fun getPresentMembers()
-    {
-        membersLoader =
-                membersInteractor.getPresentMembers(eventId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { result ->
-                        if (result.isNotEmpty())
-                        {
-                            sendMembers(result)
-                        }
-                    }
-    }
-
-    private fun sendMembers(membersList: List<MemberPostDto>)
-    {
-        val call: Call<MemberPostResponse> =
-            membersInteractor.sendMembersToServer(eventId, membersList)
-        call.enqueue(object : Callback<MemberPostResponse>
-        {
-            override fun onResponse(
-                call: Call<MemberPostResponse>, response: Response<MemberPostResponse>
-            )
-            {
-                Toast.makeText(
-                    this@MembersActivity,
-                    getString(R.string.postRequestSuccessfulToast),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onFailure(call: Call<MemberPostResponse>, t: Throwable)
-            {
-                Toast.makeText(
-                    this@MembersActivity, getString(R.string.postRequestErrorToast),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-    }
-
-    private fun initiateRecycleView()
+    override fun initiateAdapter()
     {
         membersListView.layoutManager = LinearLayoutManager(this)
         membersListView.addItemDecoration(
@@ -135,13 +67,22 @@ class MembersActivity : AppCompatActivity()
         {
             override fun onCheckBoxClick(member: Member)
             {
-                membersLoader = Observable.just(membersInteractor)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe { repository -> repository.updateMember(member) }
+                presenter.updateMember(member)
             }
-
         })
         membersListView.adapter = adapter
+    }
+
+    override fun updateAdapter(membersList: List<Member>)
+    {
+        adapter.updateMembers(membersList)
+    }
+
+    override fun showToast(text: String)
+    {
+        Toast.makeText(
+            this, text, Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean
@@ -181,14 +122,14 @@ class MembersActivity : AppCompatActivity()
         {
             StatisticActivity.startActivity(
                 this,
-                memberList.size,
-                memberList.count { member -> member.presentStatus },
+                adapter.getMemberListCount(),
+                adapter.getPresentMembersCount(),
                 title.toString()
             )
         }
         if (item.itemId == R.id.sendMembersButton)
         {
-            getPresentMembers()
+            presenter.sendMembers()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -196,6 +137,6 @@ class MembersActivity : AppCompatActivity()
     override fun onStop()
     {
         super.onStop()
-        membersLoader.dispose()
+        presenter.detachView()
     }
 }

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_events.*
 class EventsActivity : AppCompatActivity(), EventsContract.View
 {
     private lateinit var adapter: EventListAdapter
-    private lateinit var presenter: EventsPresenter
+    private lateinit var presenter: EventsContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
