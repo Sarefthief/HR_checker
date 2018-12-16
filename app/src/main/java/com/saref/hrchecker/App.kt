@@ -16,10 +16,6 @@ import com.saref.hrchecker.utils.Constants
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.migration.Migration
-
-
 
 class App : Application()
 {
@@ -43,7 +39,8 @@ class App : Application()
     {
         super.onCreate()
         instance = this
-        databaseProvider = Room.databaseBuilder(this, AppDatabase::class.java, "hr-database").build()
+        databaseProvider =
+                Room.databaseBuilder(this, AppDatabase::class.java, "hr-database").build()
 
         val retrofitApi: Api = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
