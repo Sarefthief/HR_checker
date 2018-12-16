@@ -21,7 +21,6 @@ class EventsActivity : AppCompatActivity(), EventsContract.View
         eventsListView.layoutManager = LinearLayoutManager(this)
 
         presenter = EventsPresenter()
-        presenter.attachView(this)
     }
 
     override fun initiateAdapter()
@@ -47,6 +46,12 @@ class EventsActivity : AppCompatActivity(), EventsContract.View
     override fun hideProgressBar()
     {
         eventsListProgressBar.visibility = View.GONE
+    }
+
+    override fun onResume()
+    {
+        super.onResume()
+        presenter.attachView(this)
     }
 
     override fun onStop()

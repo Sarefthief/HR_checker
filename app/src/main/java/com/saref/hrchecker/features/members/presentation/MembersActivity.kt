@@ -44,7 +44,6 @@ class MembersActivity : AppCompatActivity(), MembersContract.View
         title = intent.getStringExtra(EVENT_TITLE_EXTRA)
 
         presenter = MembersPresenter()
-        (presenter as MembersPresenter).attachView(this, intent.getIntExtra(EVENT_ID_EXTRA, -1))
     }
 
     override fun initiateAdapter()
@@ -134,6 +133,11 @@ class MembersActivity : AppCompatActivity(), MembersContract.View
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume()
+    {
+        super.onResume()
+        (presenter as MembersPresenter).attachView(this, intent.getIntExtra(EVENT_ID_EXTRA, -1))
+    }
     override fun onStop()
     {
         super.onStop()
