@@ -1,9 +1,9 @@
-package com.saref.hrchecker.features.events.domain
+package com.saref.hrchecker.features.events.domain.interactor
 
 import com.saref.hrchecker.features.events.domain.entity.Event
 import io.reactivex.Single
 
-interface EventsRepository
+interface EventsInteractor
 {
     fun getEventsFromDatabase(): Single<List<Event>>
     fun getEventsFromServer(): Single<List<Event>>

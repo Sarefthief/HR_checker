@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import com.saref.hrchecker.R
-import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.features.members.domain.entity.Member
 import com.saref.hrchecker.utils.Constants
 import kotlinx.android.synthetic.main.item_member.view.*
 import java.text.SimpleDateFormat

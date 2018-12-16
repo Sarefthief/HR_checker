@@ -1,37 +1,35 @@
 package com.saref.hrchecker.features.events.data
 
-import com.saref.hrchecker.features.events.data.database.EventsDatabaseService
-import com.saref.hrchecker.data.network.RetrofitProvider
-import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.App
+import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.features.events.domain.EventsRepository
 import io.reactivex.Observable
 import io.reactivex.Single
 
 class EventsRepositoryImpl : EventsRepository
 {
-
-    private val databaseService = EventsDatabaseService()
-    private val networkService = RetrofitProvider.eventsApiService
+    private val databaseDataSource = App.eventDatabaseDataSource
+    private val networkDataSource = App.eventsNetworkDataSource
 
     override fun getEventsFromDatabase(): Single<List<Event>> =
-        databaseService.getEvents()
+        databaseDataSource.getEvents()
 
     override fun getEventsFromServer(): Single<List<Event>> =
-        networkService.getEvents().flatMap {
+        networkDataSource.getEvents().flatMap {
             Observable.fromIterable(it)
                 .map { event ->
-                    if(databaseService.checkEvent(event.id) == 0)
+                    if(databaseDataSource.checkEvent(event.id) == 0)
                     {
-                        networkService.getMembers(event.id)
-                            .map { membersList -> databaseService.saveMembers(membersList) }
+                        networkDataSource.getMembers(event.id)
+                            .map { membersList -> databaseDataSource.saveMembers(membersList) }
                             .subscribe()
                     }
                 }
                 .subscribe()
 
-            databaseService.saveEvents(it)
-            databaseService.getEvents()
-        }.onErrorResumeNext(databaseService.getEvents())
+            databaseDataSource.saveEvents(it)
+            databaseDataSource.getEvents()
+        }.onErrorResumeNext(databaseDataSource.getEvents())
 
 
 }

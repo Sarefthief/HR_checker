@@ -1,4 +1,4 @@
-package com.saref.hrchecker.features.members.data.network.dto
+package com.saref.hrchecker.features.members.data.network.entity
 
 data class MemberPostDto(
     val id : Int,

@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.saref.hrchecker.R
-import com.saref.hrchecker.features.events.data.EventsRepositoryImpl
-import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.events.domain.entity.Event
+import com.saref.hrchecker.features.events.domain.interactor.EventsInteractor
+import com.saref.hrchecker.features.events.domain.interactor.EventsInteractorImpl
 import com.saref.hrchecker.features.members.presentation.MembersActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -18,6 +19,7 @@ class EventsActivity : AppCompatActivity()
     private lateinit var eventsLoader: Disposable
     private lateinit var eventList: List<Event>
     private lateinit var adapter: EventListAdapter
+    private var eventsInteractor: EventsInteractor = EventsInteractorImpl()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -32,7 +34,7 @@ class EventsActivity : AppCompatActivity()
     {
         eventsListProgressBar.visibility = View.VISIBLE
         eventsLoader =
-                EventsRepositoryImpl().getEventsFromDatabase()
+                eventsInteractor.getEventsFromDatabase()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
@@ -49,7 +51,7 @@ class EventsActivity : AppCompatActivity()
     private fun getEventsFromServer()
     {
         eventsLoader =
-                EventsRepositoryImpl().getEventsFromServer()
+                eventsInteractor.getEventsFromServer()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->

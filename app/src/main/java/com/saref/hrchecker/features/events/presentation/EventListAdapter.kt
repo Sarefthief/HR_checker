@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.saref.hrchecker.R
-import com.saref.hrchecker.features.events.domain.Event
+import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.utils.Constants
 import kotlinx.android.synthetic.main.item_event.view.*
 import java.text.SimpleDateFormat

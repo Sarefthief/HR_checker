@@ -1,4 +1,4 @@
-package com.saref.hrchecker.features.events.data.network.dto
+package com.saref.hrchecker.features.events.data.network.entity
 
 data class MemberDto(
     val id: Int,

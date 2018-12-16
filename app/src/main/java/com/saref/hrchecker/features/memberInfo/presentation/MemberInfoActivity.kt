@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.saref.hrchecker.R
-import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.features.members.domain.entity.Member
 import com.saref.hrchecker.utils.setTextHTML
 import kotlinx.android.synthetic.main.activity_member_info.*
 

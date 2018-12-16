@@ -1,4 +1,4 @@
-package com.saref.hrchecker.features.members.data.network
+package com.saref.hrchecker.features.members.data.network.entity
 
 data class MemberPostResponse(
     val result: Boolean,

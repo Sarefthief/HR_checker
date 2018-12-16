@@ -13,10 +13,11 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity
-import com.saref.hrchecker.features.members.data.MembersRepositoryImpl
-import com.saref.hrchecker.features.members.data.network.MemberPostResponse
-import com.saref.hrchecker.features.members.data.network.dto.MemberPostDto
-import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.features.members.data.network.entity.MemberPostDto
+import com.saref.hrchecker.features.members.data.network.entity.MemberPostResponse
+import com.saref.hrchecker.features.members.domain.entity.Member
+import com.saref.hrchecker.features.members.domain.interactor.MembersInteractor
+import com.saref.hrchecker.features.members.domain.interactor.MembersInteractorImpl
 import com.saref.hrchecker.features.statistic.presentation.StatisticActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,12 +28,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class MembersActivity : AppCompatActivity()
 {
     private lateinit var membersLoader: Disposable
     private lateinit var memberList: List<Member>
     private lateinit var adapter: MemberListAdapter
+    private var membersInteractor: MembersInteractor = MembersInteractorImpl()
     private var eventId: Int = -1
 
     companion object
@@ -63,7 +64,7 @@ class MembersActivity : AppCompatActivity()
     private fun getMembers()
     {
         membersLoader =
-                MembersRepositoryImpl().getMembers(eventId)
+                membersInteractor.getMembers(eventId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
@@ -76,7 +77,7 @@ class MembersActivity : AppCompatActivity()
     private fun getPresentMembers()
     {
         membersLoader =
-                MembersRepositoryImpl().getPresentMembers(eventId)
+                membersInteractor.getPresentMembers(eventId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { result ->
@@ -90,7 +91,7 @@ class MembersActivity : AppCompatActivity()
     private fun sendMembers(membersList: List<MemberPostDto>)
     {
         val call: Call<MemberPostResponse> =
-            MembersRepositoryImpl().sendMembersToServer(eventId, membersList)
+            membersInteractor.sendMembersToServer(eventId, membersList)
         call.enqueue(object : Callback<MemberPostResponse>
         {
             override fun onResponse(
@@ -134,7 +135,7 @@ class MembersActivity : AppCompatActivity()
         {
             override fun onCheckBoxClick(member: Member)
             {
-                membersLoader = Observable.just(MembersRepositoryImpl())
+                membersLoader = Observable.just(membersInteractor)
                     .subscribeOn(Schedulers.io())
                     .subscribe { repository -> repository.updateMember(member) }
             }

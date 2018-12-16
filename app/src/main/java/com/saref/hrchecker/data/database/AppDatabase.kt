@@ -1,8 +1,8 @@
 package com.saref.hrchecker.data.database
 
 import android.arch.persistence.room.*
-import com.saref.hrchecker.features.events.domain.Event
-import com.saref.hrchecker.features.members.domain.Member
+import com.saref.hrchecker.features.events.domain.entity.Event
+import com.saref.hrchecker.features.members.domain.entity.Member
 import io.reactivex.Single
 
 @Database(entities = [Event::class, Member::class], version = 2)

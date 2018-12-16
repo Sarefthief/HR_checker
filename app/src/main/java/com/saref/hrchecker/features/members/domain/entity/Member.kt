@@ -1,4 +1,4 @@
-package com.saref.hrchecker.features.members.domain
+package com.saref.hrchecker.features.members.domain.entity
 
 import android.arch.persistence.room.Entity
 import java.io.Serializable

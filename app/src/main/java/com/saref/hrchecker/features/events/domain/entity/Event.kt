@@ -1,4 +1,4 @@
-package com.saref.hrchecker.features.events.domain
+package com.saref.hrchecker.features.events.domain.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
