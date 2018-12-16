@@ -9,6 +9,8 @@ import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.utils.Constants
 import kotlinx.android.synthetic.main.item_event.view.*
 import java.text.SimpleDateFormat
+import com.bumptech.glide.Glide
+import com.saref.hrchecker.utils.setTextHTML
 import java.util.*
 
 class EventListAdapter(private val clickListener: ClickListener) :
@@ -47,6 +49,9 @@ class EventListAdapter(private val clickListener: ClickListener) :
                     SimpleDateFormat(Constants.VISIBLE_DATE_FORMAT, Locale.getDefault()).format(
                         event.startDate
                     )
+            view.eventDescription.text = event.description.setTextHTML()
+            view.eventCity.text = event.city
+            Glide.with(itemView).load(Constants.BASE_URL + event.cardImage).into(view.eventImage)
             view.setOnClickListener { listener.onItemClick(event.id, event.title) }
         }
     }

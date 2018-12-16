@@ -11,5 +11,6 @@ data class Event(
     val description: String,
     val startDate: Long,
     val endDate: Long,
-    val cardImage: String
+    val cardImage: String,
+    val city: String
 )

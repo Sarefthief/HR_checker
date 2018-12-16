@@ -20,7 +20,8 @@ fun EventDto.convertToEvent() = Event(
         Locale.US
     ).parse(this.date.start).time,
     endDate = SimpleDateFormat(Constants.SERVER_DATE_FORMAT, Locale.US).parse(this.date.end).time,
-    cardImage = this.cardImage
+    cardImage = this.cardImage,
+    city = this.cities[0].nameRus
 )
 
 fun MemberDto.convertToMember(eventId: Int) =

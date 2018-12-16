@@ -5,7 +5,7 @@ import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.features.members.domain.entity.Member
 import io.reactivex.Single
 
-@Database(entities = [Event::class, Member::class], version = 2)
+@Database(entities = [Event::class, Member::class], version = 3)
 abstract class AppDatabase : RoomDatabase()
 {
     abstract fun eventDao(): EventDao

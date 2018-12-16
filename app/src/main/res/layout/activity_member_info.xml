@@ -17,77 +17,90 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/form"/>
+                android:text="@string/form"
+                style="@style/titleTextView"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/patronymic"/>
+                android:text="@string/patronymic"
+                style="@style/itemTitleTextView"/>
 
             <TextView
                 android:id="@+id/patronymicText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/phoneText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/emailText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/city"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/cityText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/company"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/companyText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/position"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/positionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
             <TextView
@@ -95,12 +108,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/addition"
+                style="@style/itemTitleTextView"
                 />
 
             <TextView
                 android:id="@+id/additionText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/itemContentTextView"
                 />
 
         </LinearLayout>

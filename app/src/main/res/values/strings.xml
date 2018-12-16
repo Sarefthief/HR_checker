@@ -19,4 +19,5 @@
     <string name="postRequestErrorToast">Что-то пошло не так</string>
     <string name="postRequestSuccessfulToast">Отправка прошла успешно</string>
     <string name="postRequestNothingToSend">Список присутствующих пуст</string>
+    <string name="eventImageContentDescription">Изображение мероприятия</string>
 </resources>

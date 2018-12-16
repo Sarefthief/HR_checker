@@ -11,15 +11,18 @@
         android:id="@+id/membersRegisteredView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/membersRegistered"/>
+        android:text="@string/membersRegistered"
+        style="@style/statisticsTextView"/>
 
     <TextView
         android:id="@+id/membersRegisteredText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/membersRegisteredView" />
+        app:layout_constraintStart_toEndOf="@+id/membersRegisteredView"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/statisticsTextView"/>
 
     <TextView
         android:id="@+id/membersCheckedView"
@@ -27,13 +30,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/membersRegisteredView"
-        android:text="@string/membersChecked"/>
+        android:text="@string/membersChecked"
+        style="@style/statisticsTextView"/>
 
     <TextView
         android:id="@+id/membersCheckedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@+id/membersCheckedView"
-        app:layout_constraintTop_toBottomOf="@id/membersRegisteredView" />
+        app:layout_constraintTop_toBottomOf="@id/membersRegisteredView"
+        style="@style/statisticsTextView"/>
 
 </android.support.constraint.ConstraintLayout>

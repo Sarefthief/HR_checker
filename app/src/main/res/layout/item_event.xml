@@ -14,9 +14,18 @@
             android:id="@+id/eventStartDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/eventCity"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/dateTextView"/>
+
+        <TextView
+            android:id="@+id/eventCity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/eventStartDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/cityTextView"/>
 
         <TextView
             android:id="@+id/eventTitle"
@@ -24,7 +33,28 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eventStartDate" />
+            app:layout_constraintTop_toBottomOf="@+id/eventStartDate"
+            style="@style/titleTextView"/>
+
+
+        <ImageView
+            android:id="@+id/eventImage"
+            android:contentDescription="@string/eventImageContentDescription"
+            app:layout_constraintTop_toBottomOf="@+id/eventTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/eventDescription"
+            style="@style/imageView"/>
+
+        <TextView
+            android:id="@+id/eventDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/eventImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/descriptionTextView"/>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -6,10 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.saref.hrchecker.R
 import com.saref.hrchecker.features.events.domain.entity.Event
-import com.saref.hrchecker.features.events.domain.interactor.EventsInteractor
-import com.saref.hrchecker.features.events.domain.interactor.EventsInteractorImpl
 import com.saref.hrchecker.features.members.presentation.MembersActivity
-import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_events.*
 
 class EventsActivity : AppCompatActivity(), EventsContract.View
@@ -40,10 +37,7 @@ class EventsActivity : AppCompatActivity(), EventsContract.View
         eventsListView.adapter = adapter
     }
 
-    override fun updateAdapter(eventsList: List<Event>)
-    {
-        adapter.updateEvents(eventsList)
-    }
+    override fun updateAdapter(eventsList: List<Event>) = adapter.updateEvents(eventsList)
 
     override fun showProgressBar()
     {
