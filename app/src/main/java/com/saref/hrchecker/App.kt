@@ -2,8 +2,8 @@ package com.saref.hrchecker
 
 import android.app.Application
 import android.arch.persistence.room.Room
-import com.saref.hrchecker.data.database.AppDatabase
-import com.saref.hrchecker.data.network.Api
+import com.saref.hrchecker.common.data.database.AppDatabase
+import com.saref.hrchecker.common.data.network.Api
 import com.saref.hrchecker.features.events.data.database.EventsDatabaseDataSource
 import com.saref.hrchecker.features.events.data.database.EventsDatabaseDataSourceImpl
 import com.saref.hrchecker.features.events.data.network.EventsNetworkDataSource

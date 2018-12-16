@@ -1,6 +1,6 @@
 package com.saref.hrchecker.features.members.data.network
 
-import com.saref.hrchecker.data.network.Api
+import com.saref.hrchecker.common.data.network.Api
 import com.saref.hrchecker.features.members.data.network.entity.MemberPostDto
 import com.saref.hrchecker.features.members.data.network.entity.MemberPostResponse
 import retrofit2.Call

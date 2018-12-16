@@ -33,8 +33,10 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name="com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity" />
-        <activity android:name="com.saref.hrchecker.features.statistic.presentation.StatisticActivity"/>
+        <activity android:name="com.saref.hrchecker.features.memberInfo.presentation.MemberInfoActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name="com.saref.hrchecker.features.statistic.presentation.StatisticActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

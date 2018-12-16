@@ -1,7 +1,7 @@
 package com.saref.hrchecker.features.members.data.database
 
 import com.saref.hrchecker.App
-import com.saref.hrchecker.data.database.MemberDao
+import com.saref.hrchecker.common.data.database.MemberDao
 import com.saref.hrchecker.features.members.data.network.entity.MemberPostDto
 import com.saref.hrchecker.features.members.domain.entity.Member
 import com.saref.hrchecker.utils.convertToMemberPostDto

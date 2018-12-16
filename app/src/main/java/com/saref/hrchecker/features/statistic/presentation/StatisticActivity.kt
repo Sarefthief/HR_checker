@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_statistic.*
 
 class StatisticActivity : AppCompatActivity()
 {
-
     companion object
     {
         private const val MEMBERS_COUNT_EXTRA = "MEMBERS_COUNT_EXTRA"

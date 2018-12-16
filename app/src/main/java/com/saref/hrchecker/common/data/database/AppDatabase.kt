@@ -1,4 +1,4 @@
-package com.saref.hrchecker.data.database
+package com.saref.hrchecker.common.data.database
 
 import android.arch.persistence.room.*
 import com.saref.hrchecker.features.events.domain.entity.Event

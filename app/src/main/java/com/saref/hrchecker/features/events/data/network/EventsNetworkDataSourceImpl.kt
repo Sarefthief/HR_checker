@@ -1,6 +1,6 @@
 package com.saref.hrchecker.features.events.data.network
 
-import com.saref.hrchecker.data.network.Api
+import com.saref.hrchecker.common.data.network.Api
 import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.features.members.domain.entity.Member
 import com.saref.hrchecker.utils.convertToEvent

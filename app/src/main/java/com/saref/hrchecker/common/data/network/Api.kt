@@ -1,4 +1,4 @@
-package com.saref.hrchecker.data.network
+package com.saref.hrchecker.common.data.network
 
 import com.saref.hrchecker.features.events.data.network.entity.EventDto
 import com.saref.hrchecker.features.events.data.network.entity.MemberDto

@@ -9,60 +9,25 @@ import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.features.events.domain.interactor.EventsInteractor
 import com.saref.hrchecker.features.events.domain.interactor.EventsInteractorImpl
 import com.saref.hrchecker.features.members.presentation.MembersActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_events.*
 
-class EventsActivity : AppCompatActivity()
+class EventsActivity : AppCompatActivity(), EventsContract.View
 {
-    private lateinit var eventsLoader: Disposable
-    private lateinit var eventList: List<Event>
     private lateinit var adapter: EventListAdapter
-    private var eventsInteractor: EventsInteractor = EventsInteractorImpl()
+    private lateinit var presenter: EventsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_events)
         eventsListView.layoutManager = LinearLayoutManager(this)
-        initiateRecycleView()
-        getEventsFromDatabase()
+
+        presenter = EventsPresenter()
+        presenter.attachView(this)
     }
 
-    private fun getEventsFromDatabase()
-    {
-        eventsListProgressBar.visibility = View.VISIBLE
-        eventsLoader =
-                eventsInteractor.getEventsFromDatabase()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { result ->
-                        if (result.isNotEmpty())
-                        {
-                            eventList = result
-                            updateRecycleView()
-                            eventsListProgressBar.visibility = View.GONE
-                        }
-                        getEventsFromServer()
-                    }
-    }
-
-    private fun getEventsFromServer()
-    {
-        eventsLoader =
-                eventsInteractor.getEventsFromServer()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { result ->
-                        eventList = result
-                        updateRecycleView()
-                        eventsListProgressBar.visibility = View.GONE
-                    }
-    }
-
-
-    private fun initiateRecycleView()
+    override fun initiateAdapter()
     {
         adapter = EventListAdapter(object :
             EventListAdapter.ClickListener
@@ -75,11 +40,24 @@ class EventsActivity : AppCompatActivity()
         eventsListView.adapter = adapter
     }
 
-    private fun updateRecycleView() = adapter.updateEvents(eventList)
+    override fun updateAdapter(eventsList: List<Event>)
+    {
+        adapter.updateEvents(eventsList)
+    }
+
+    override fun showProgressBar()
+    {
+        eventsListProgressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgressBar()
+    {
+        eventsListProgressBar.visibility = View.GONE
+    }
 
     override fun onStop()
     {
         super.onStop()
-        eventsLoader.dispose()
+        presenter.detachView()
     }
 }

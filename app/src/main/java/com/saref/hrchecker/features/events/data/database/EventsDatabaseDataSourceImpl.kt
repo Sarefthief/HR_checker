@@ -1,8 +1,8 @@
 package com.saref.hrchecker.features.events.data.database
 
 import com.saref.hrchecker.App
-import com.saref.hrchecker.data.database.EventDao
-import com.saref.hrchecker.data.database.MemberDao
+import com.saref.hrchecker.common.data.database.EventDao
+import com.saref.hrchecker.common.data.database.MemberDao
 import com.saref.hrchecker.features.events.domain.entity.Event
 import com.saref.hrchecker.features.members.domain.entity.Member
 import io.reactivex.Single
