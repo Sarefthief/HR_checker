@@ -51,7 +51,7 @@ class EventListAdapter(private val clickListener: ClickListener) :
                     )
             view.eventDescription.text = event.description.setTextHTML()
             view.eventCity.text = event.city
-            Glide.with(itemView).load(Constants.BASE_URL + event.cardImage).into(view.eventImage)
+            Glide.with(view).load(Constants.BASE_URL + event.cardImage).into(view.eventImage)
             view.setOnClickListener { listener.onItemClick(event.id, event.title) }
         }
     }
